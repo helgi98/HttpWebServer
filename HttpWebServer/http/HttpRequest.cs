@@ -9,48 +9,62 @@ namespace HttpWebServer.http
 {
     public class HttpRequest
     {
+        private Dictionary<String, String> _queryParameters;
+        private Dictionary<string, string> _headers;
+        private List<Cookie> _cookies;
         public string Method { get; set; }
         public Uri Url { get; set; }
         public string Content { get; set; }
-        public Dictionary<string, string> Headers { get; set; }
 
-        public Dictionary<String, String> GetQueryPrameters()
+        public void AddCookie(Cookie cookie)
         {
-            Dictionary<string, string> queryParameters = new Dictionary<string, string>();
+            _cookies.Add(cookie);
+        }
 
-            try
-            {
-                var query = new Uri(new Uri("http://localhost/"), Url).Query;
-                var queryData = WebUtility.UrlDecode(query).Substring(1).Split(';').Where(str => str != "");
-                foreach (var pair in queryData)
-                {
-                    string[] parts = pair.Split('=');
-                    queryParameters.Add(parts[0], parts[1]);
-                }
-            }
-            catch { }
+        public Cookie GetCookie(String name)
+        {
+            var c = _cookies.Where(cookie => cookie.Name == name);
 
-            return queryParameters;
+            if (c.Count() == 1) return c.First();
+            else return null;
+        }
+
+        public void AddQueryParameter(String key, String value)
+        {
+            _queryParameters.Add(key, value);
+        }
+
+        public void AddHeader(String key, String value)
+        {
+            _headers.Add(key, value);
+        }
+
+        public String GetQueryParameter(String key)
+        {
+            _queryParameters.TryGetValue(key, out String value);
+            return value;
         }
 
         public String GetHeader(String header)
         {
-            Headers.TryGetValue(header, out String value);
+            _headers.TryGetValue(header, out String value);
             return value;
         }
 
         public HttpRequest()
         {
-            Headers = new Dictionary<string, string>();
+            _headers = new Dictionary<string, string>();
+            _queryParameters = new Dictionary<string, string>();
+            _cookies = new List<Cookie>();
         }
 
         public override string ToString()
         {
             if (!string.IsNullOrWhiteSpace(Content))
-                if (!Headers.ContainsKey("Content-Length"))
-                    Headers.Add("Content-Length", Content.Length.ToString());
+                if (!_headers.ContainsKey("Content-Length"))
+                    _headers.Add("Content-Length", Content.Length.ToString());
 
-            return $"{Method} {Url} HTTP/1.0\r\n{string.Join("\r\n", Headers.Select(h => $"{h.Key}: {h.Value}"))}" +
+            return $"{Method} {Url} HTTP/1.0\r\n{string.Join("\r\n", _headers.Select(h => $"{h.Key}: {h.Value}"))}" +
                 $"\r\n\r\n{Content}";
         }
     }

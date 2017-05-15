@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
@@ -125,50 +126,9 @@ namespace HttpWebServer
             }
         }
 
-        /*protected virtual HttpResponse RouteRequest(Stream inputStream, Stream outputStream, HttpRequest request)
-        {
-
-            List<Route> routes = this.Routes.Where(x => Regex.Match(request.Url, x.UrlRegex).Success).ToList();
-
-            if (!routes.Any())
-                return HttpBuilder.NotFound();
-
-            Route route = routes.SingleOrDefault(x => x.Method == request.Method);
-
-            if (route == null)
-                return new HttpResponse()
-                {
-                    ReasonPhrase = "Method Not Allowed",
-                    StatusCode = "405",
-
-                };
-
-            // extract the path if there is one
-            var match = Regex.Match(request.Url, route.UrlRegex);
-            if (match.Groups.Count > 1)
-            {
-                request.Path = match.Groups[1].Value;
-            }
-            else
-            {
-                request.Path = request.Url;
-            }
-
-            // trigger the route handler...
-            request.Route = route;
-            try
-            {
-                return route.Callable(request);
-            }
-            catch (Exception ex)
-            {
-                return HttpBuilder.InternalServerError();
-            }
-
-        }*/
-
         private HttpRequest ReadRequest(Stream inputStream)
         {
+            HttpRequest req = new HttpRequest();
             //Read Request Line
             string request = ReadLine(inputStream);
 
@@ -178,12 +138,28 @@ namespace HttpWebServer
                 throw new Exception("Invalid http request");
             }
 
-            string method = tokens[0].ToUpper();
-            Uri url = new Uri(tokens[1], UriKind.Relative);
-            string protocolVersion = tokens[2];
+            req.Method = tokens[0].ToUpper();
+
+            if (tokens[1].IndexOf('?') == -1)
+                req.Url = new Uri(tokens[1], UriKind.Relative);
+            else req.Url = new Uri(new string(tokens[1].TakeWhile(ch => ch != '?').ToArray()), UriKind.Relative);
+
+            try
+            {
+                String query = new Uri(new Uri("http://loaclhost/"), tokens[1]).Query.Substring(1);
+                if (query != "")
+                {
+                    var queryData = WebUtility.UrlDecode(query).Split(';').Where(str => str != "");
+                    foreach (var pair in queryData)
+                    {
+                        string[] parts = pair.Split('=');
+                        req.AddQueryParameter(parts[0], parts[1]);
+                    }
+                }
+            }
+            catch { }
 
             //Read Headers
-            Dictionary<string, string> headers = new Dictionary<string, string>();
             string line;
             while ((line = ReadLine(inputStream)) != null)
             {
@@ -197,15 +173,25 @@ namespace HttpWebServer
                 int pos = separator + 1;
                 string value = new string(line.Substring(pos).SkipWhile(ch => char.IsWhiteSpace(ch)).ToArray());
 
-                headers.Add(name, value);
+                if (name == "Cookie")
+                {
+                    String[] cookies = value.Split(';').Where(c => c != "").ToArray();
+                    foreach(var cookie in cookies)
+                    {
+                        String[] pair = cookie.Trim().Split('=');
+                        req.AddCookie(new http.Cookie { Name = pair[0], Value = pair[1] });
+                    }
+                }
+
+                req.AddHeader(name, value);
             }
 
             string content = null;
 
             //Read content
-            if (headers.ContainsKey("Content-Length"))
+            if (req.GetHeader("Content-Length") != null)
             {
-                int totalBytes = Convert.ToInt32(headers["Content-Length"]);
+                int totalBytes = Convert.ToInt32(req.GetHeader("Content-Length"));
                 int bytesLeft = totalBytes;
                 byte[] bytes = new byte[totalBytes];
 
@@ -222,14 +208,10 @@ namespace HttpWebServer
                 content = Encoding.ASCII.GetString(bytes);
             }
 
+            req.Content = content;
 
-            return new HttpRequest()
-            {
-                Method = method,
-                Url = url,
-                Headers = headers,
-                Content = content
-            };
+
+            return req;
         }
 
         #endregion

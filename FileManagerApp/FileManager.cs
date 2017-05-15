@@ -16,6 +16,13 @@ namespace FileManagerApp
             RootPath = @"C:/";
         }
 
+        public static Stream DownloadFile(String path)
+        {
+            Stream stream = new FileStream(RootPath + path, FileMode.Open);
+
+            return stream;
+        }
+
         public static Dictionary<String, List<String>> GetDirectoryContent(String path)
         {
             Dictionary<String, List<String>> directoryContent = new Dictionary<string, List<string>>();

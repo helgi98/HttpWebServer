@@ -95,6 +95,7 @@ namespace HttpWebServer.application
             }
             else
             {
+
                 Controller controller = GetController(_router.RouteRequest(req.Url.ToString()));
                 
                 if (controller != null)

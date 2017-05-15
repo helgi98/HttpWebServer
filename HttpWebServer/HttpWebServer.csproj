@@ -57,6 +57,7 @@
     <Compile Include="application\ControllerContatiner.cs" />
     <Compile Include="HttpProcessor.cs" />
     <Compile Include="HttpServer.cs" />
+    <Compile Include="http\Cookie.cs" />
     <Compile Include="http\HttpRequest.cs" />
     <Compile Include="http\HttpResponse.cs" />
     <Compile Include="Program.cs" />

@@ -1,17 +1,16 @@
-﻿using System;
+﻿using HttpWebServer.controllers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using HttpWebServer.http;
-using HttpWebServer.controllers;
-using Newtonsoft.Json;
-using HttpWebServer;
 using System.IO;
 
 namespace FileManagerApp
 {
-    class TreeViewController: Controller
-    {     
-
+    class DownloadFileController: Controller
+    {
         public override void DoGet(HttpRequest req, HttpResponse res)
         {
             if (req.GetQueryParameter("path") != null)
@@ -19,12 +18,11 @@ namespace FileManagerApp
                 try
                 {
                     String path = req.GetQueryParameter("path");
-                    Dictionary<String, List<String>> data = FileManager.GetDirectoryContent(path);
-                    Stream jsonData = JsonConvert.SerializeObject(data).ToStream();
+                    Stream stream = FileManager.DownloadFile(path);
 
-                    res.Headers.Add("Content-Type", "application/json");
-                    res.Headers.Add("Content-Length", jsonData.Length.ToString());
-                    res.Content = jsonData;
+                    res.Headers.Add("Content-Type", "application/octet-stream");
+                    res.Headers.Add("Content-Length", stream.Length.ToString());
+                    res.Content = stream;
                 }
                 catch
                 {
@@ -34,7 +32,8 @@ namespace FileManagerApp
             }
             else
             {
-                Dispatcher.Forward(req, res, "pages/index.html");
+                res.StatusCode = "404";
+                res.ReasonPhrase = "File Not Found";
             }
         }
     }
