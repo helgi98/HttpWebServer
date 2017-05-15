@@ -2,7 +2,7 @@
 Config file example:
 
 <?xml version="1.0" encoding="utf-8" ?>
-<Config>
+<?--<Config>
   <Controllers>
     <Controller>
       <Url-pattern>/</Url-pattern>
@@ -17,4 +17,4 @@ Config file example:
     <Resolver-class>HttpWebServer.application.ResourceResolver</Resolver-class>
     <Path>/resources/</Path>
   </ResourceResolver>
-</Config>
+</Config>-->
