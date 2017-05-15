@@ -39,5 +39,10 @@ namespace FileManagerApp
 
             return directoryContent;
         }
+
+        public static void ChangeFileName(string oldName, string newName, string directoryPath)
+        {
+            File.Move(RootPath + directoryPath + oldName, RootPath + directoryPath + newName);
+        }
     }
 }
