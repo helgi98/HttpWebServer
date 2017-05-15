@@ -41,13 +41,15 @@ namespace HttpWebServer.http
 
         public String GetQueryParameter(String key)
         {
-            _queryParameters.TryGetValue(key, out String value);
+            String value;
+            _queryParameters.TryGetValue(key, out value);
             return value;
         }
 
         public String GetHeader(String header)
         {
-            _headers.TryGetValue(header, out String value);
+            String value;
+            _headers.TryGetValue(header, out value);
             return value;
         }
 

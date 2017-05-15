@@ -55,7 +55,8 @@ namespace HttpWebServer.application
 
             if (req.GetHeader("Referer") != null)
             {
-                Uri.TryCreate(req.GetHeader("Referer"), UriKind.Absolute, out Uri referer);
+                Uri referer;
+                Uri.TryCreate(req.GetHeader("Referer"), UriKind.Absolute, out referer);
                 Uri.TryCreate(new Uri(referer.GetLeftPart(UriPartial.Authority)), url, out url);
 
                 return referer.MakeRelativeUri(url);
@@ -66,7 +67,8 @@ namespace HttpWebServer.application
 
         private Controller GetController(String ctrlClass)
         {
-            _controllers.TryGetValue(ctrlClass, out Controller controller);
+            Controller controller;
+            _controllers.TryGetValue(ctrlClass, out  controller);
             if (controller == null)
             {
                 controller = Utilities.CreateClassExample<Controller>(ctrlClass);

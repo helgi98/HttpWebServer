@@ -50,7 +50,8 @@ namespace HttpWebServer
 
         public void RunApplication(string name, int port)
         {
-            _applications.TryGetValue(name, out Application app);
+            Application app;
+            _applications.TryGetValue(name, out app);
             if (app != null && !app.IsActive)
             {
                 app.IsActive = true;
@@ -65,7 +66,8 @@ namespace HttpWebServer
 
         public void StopApplication(string name)
         {
-            _applications.TryGetValue(name, out Application app);
+            Application app;
+            _applications.TryGetValue(name, out app);
             if (app != null) app.IsActive = false;
         }
 
