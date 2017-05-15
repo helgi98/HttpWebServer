@@ -60,6 +60,7 @@
     <Compile Include="http\Cookie.cs" />
     <Compile Include="http\HttpRequest.cs" />
     <Compile Include="http\HttpResponse.cs" />
+    <Compile Include="http\MIMETypes.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="http\ResponseDefaultBuilder.cs" />

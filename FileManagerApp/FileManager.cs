@@ -13,7 +13,7 @@ namespace FileManagerApp
 
         static FileManager()
         {
-            RootPath = @"C:/";
+            RootPath = @"D:/";
         }
 
         public static Stream DownloadFile(String path)

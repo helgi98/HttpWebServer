@@ -9,7 +9,6 @@ namespace HttpWebServer.application
 {
     interface IResource
     {
-        String GetContentType();
         void Process(HttpRequest req, HttpResponse res);
     }
 }

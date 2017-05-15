@@ -9,6 +9,16 @@ namespace HttpWebServer
 {
     public static class Utilities
     {
+        public static String GetFileName(String path)
+        {
+            return new string(path.Reverse().TakeWhile(ch => ch != '/' || ch != '\\').Reverse().ToArray());
+        }
+
+        public static String GetFileExtension(String path)
+        {
+            return new String(path.Reverse().TakeWhile(ch => ch != '.').Reverse().ToArray());
+        }
+
         public static T CreateClassExample<T>(string className)
         {
             var loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies().ToList();

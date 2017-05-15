@@ -20,6 +20,19 @@ namespace HttpWebServer.http
 
     public class HttpResponse
     {
+        private Cookie _cookie;
+        public Cookie Cookie
+        {
+            get
+            {
+                return _cookie;
+            }
+            set
+            {
+                _cookie = value;
+                Headers.Add("Set-Cookie", value.ToString());
+            }
+        }
         public string StatusCode { get; set; }
         public string ReasonPhrase { get; set; }
         public Stream Content { get; set; }

@@ -16,28 +16,11 @@ namespace HttpWebServer.application
         {
             _path = path;
         }
-
-        public string GetContentType()
-        {
-            String fileExtension =
-                new String(_path.Reverse().TakeWhile(el => el != '.').Reverse().ToArray());
-            
-            switch (fileExtension)
-            {
-                case "html": return "text/html";
-                case "css": return "text/css";
-                case "js": return "application/javascript";
-                case "png": return "image/png";
-                case "jpg": return "image/jpg";
-                case "jpeg": return "image/jpeg";
-                case "gif": return "image/gif";
-                default: return "application/octet-stream";
-            }
-        }
-
+        
         public void Process(HttpRequest req, HttpResponse res)
         {
-            res.Headers.Add("Content-Type", GetContentType());
+            res.Headers.Add("Content-Type", MIMETypes.GetContentType(_path));
+
             Stream content;
             try
             {
