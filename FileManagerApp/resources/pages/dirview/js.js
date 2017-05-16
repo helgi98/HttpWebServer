@@ -7,46 +7,71 @@ function renameFile(){
 
 var path = "/"
 
+function downloadFile(element)
+{
+    var fileName = element.value;
+    var filePath = path + fileName;
+    document.getElementById("_downloadPath").value = filePath;
+
+    var form = document.getElementById("downloadForm");
+    form.submit();
+}
+
+function formFileElement(fileName)
+{
+    return `
+        <li>
+        <p>` + fileName + `
+            <input type="image" src="Delete.png" name="delete" title="Delete"/>
+            <input type="image" src="Edit.png" name="delete" title="Rename" onclick="renameFile()" />
+            <input type="image" src="Download.png" name="download" title="Download"  onclick='downloadFile(this)'
+            value='`+ fileName + `'/>
+        </p>
+					</li>`;
+}
+
+function formDirElement(dirName)
+{
+    return "<li onclick='refreshData(this)'><p>" + dirName + "</p></li>";
+}
+
+function clearElement(element)
+{
+    while (element.firstChild) element.removeChild(element.firstChild);
+}
+
+function updateView(directories, files)
+{
+    clearElement(document.getElementById("directories"));
+    for (var i = 0; i < directories.length; ++i) {
+        $("#directories").append(formDirElement(directories[i]));
+    }
+
+    clearElement(document.getElementById("files"));
+    for (i = 0; i < files.length; ++i) {
+        $("#files").append(formFileElement(files[i]))
+    }
+}
+
 $(document).ready(function () {
     refreshData();
 })
 
 function refreshData(element) {
-    var temp = path;
-    if (element === undefined);
-    else temp = temp + element.innerHTML + "/";
+    if (element == undefined);
+    else path = path + element.firstChild.innerHTML + "/";
     var xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function () {
         if (this.status === 200) {
-            if (element == undefined);
-            else path = path + element.innerHTML + "/";
-
-            var list = document.getElementById("dirContainer");
-            while (list.firstChild) list.removeChild(list.firstChild);
-            /*list = document.getElementById("fileContainer");
-            while (list.firstChild) list.removeChild(list.firstChild);*/
-
-            console.log(this.responseText);
             var data = JSON.parse(this.responseText.trim());
 
             var directories = data["directories"];
             var files = data["files"];
 
-            $("#dirContainer").append("<ul id='directories'><h2>Directories</h2></ul>")
-            var i = 0
-            for (; i < directories.length; ++i) {
-                $("#directories").append("<li><p onclick='refreshData(this)'>" + directories[i] + "</p></li>")
-            }
-
-            /*$("#fileContainer").append("<ul id='files'><h2>Files</hd></ul>")
-            for (i = 0; i < files.length; ++i) {
-                $("#files").append("<ul>" + files[i] + "</ul>")
-            }*/
-        } if (this.status >= 400) {
-            path.replace(element.innerHTML, "");
+            updateView(directories, files);
         }
     };
-    xhttp.open("GET", "/viewdirectory?path=" + encodeURIComponent(temp), true);
+    xhttp.open("GET", "/viewdirectory?path=" + encodeURIComponent(path), true);
     xhttp.send();
 }
