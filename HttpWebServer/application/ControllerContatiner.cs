@@ -49,22 +49,6 @@ namespace HttpWebServer.application
             return req.Method.ToUpper() == "GET" && new Regex(".*\\.\\w+").IsMatch(req.Url.ToString());
         }
 
-        private Uri GetResourceUrl(HttpRequest req)
-        {
-            Uri url = req.Url;
-
-            if (req.GetHeader("Referer") != null)
-            {
-                Uri referer;
-                Uri.TryCreate(req.GetHeader("Referer"), UriKind.Absolute, out referer);
-                Uri.TryCreate(new Uri(referer.GetLeftPart(UriPartial.Authority)), url, out url);
-
-                return referer.MakeRelativeUri(url);
-            }
-
-            return url;
-        }
-
         private Controller GetController(String ctrlClass)
         {
             Controller controller;
@@ -84,6 +68,7 @@ namespace HttpWebServer.application
 
         public void Forward(HttpRequest req, HttpResponse res, String where)
         {
+            res.StatusCode = "301";
             _resolver.Resolve(where).Process(req, res);
         }
 
@@ -91,8 +76,7 @@ namespace HttpWebServer.application
         {
             if (RequestsResource(req))
             {
-                Uri url = GetResourceUrl(req);
-                IResource resource = _resolver.Resolve(url.ToString());
+                IResource resource = _resolver.Resolve(req.Url.ToString());
                 resource.Process(req, res);
             }
             else

@@ -11,8 +11,7 @@ namespace FileManagerApp
 {
     class TreeViewController: Controller
     {
-        private bool _isOpen = false;
-        
+        private bool _isOpen = true;        
 
         public override void DoGet(HttpRequest req, HttpResponse res)
         {

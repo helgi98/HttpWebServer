@@ -13,8 +13,8 @@ namespace FileManagerApp
         public override void DoGet(HttpRequest req, HttpResponse res)
         {
 
-            if (req.GetCookie("admin") != null) Container.Forward(req, res, "pages/admin.html");
-            else Container.Forward(req, res, "pages/login.html");
+            if (req.GetCookie("admin") != null) Container.Forward(req, res, "pages/dirview/index.html");
+            else Container.Forward(req, res, "pages/login/index.html");
         }
 
         public override void DoPost(HttpRequest req, HttpResponse res)
@@ -25,11 +25,11 @@ namespace FileManagerApp
             if (login == "admin" && password == "password")
             {
                 res.Cookie = new Cookie { Name = "admin", Value = "true"};
-                Container.Forward(req, res, "pages/admin.html");
+                Container.Forward(req, res, "pages/dirview/index.html");
             }
             else
             {
-                Container.Forward(req, res, "pages/login.html");
+                Container.Forward(req, res, "pages/login/index.html");
             }
         }
 

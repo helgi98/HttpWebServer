@@ -13,7 +13,7 @@ namespace HttpWebServer.application
 
         public IResource Resolve(string resourceUrl)
         {
-            Resource resource = new Resource(Path.Trim('/') + "/" + resourceUrl);
+            Resource resource = new Resource(Path.Trim('/'), resourceUrl.Trim('/'));
 
             return resource;
         }

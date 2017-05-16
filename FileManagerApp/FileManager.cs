@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,6 +11,7 @@ namespace FileManagerApp
     static class FileManager
     {
         public static String RootPath { get; set; }
+        public static Enum DirectoryAttributes { get; private set; }
 
         static FileManager()
         {
@@ -31,10 +33,12 @@ namespace FileManagerApp
 
             DirectoryInfo currDirectory = new DirectoryInfo(RootPath + path);
 
-            foreach (var file in currDirectory.EnumerateFiles())
+            foreach (var file in currDirectory.EnumerateFiles()
+                .Where(file => !file.Attributes.HasFlag(FileAttributes.Hidden)))
                 directoryContent["files"].Add(file.Name);
 
-            foreach (var directory in currDirectory.EnumerateDirectories())
+            foreach (var directory in currDirectory.EnumerateDirectories()
+                .Where(dir => !dir.Attributes.HasFlag(FileAttributes.Hidden)))
                 directoryContent["directories"].Add(directory.Name);
 
             return directoryContent;

@@ -59,27 +59,5 @@ namespace FileManagerApp.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
-        ///&lt;Config&gt;
-        ///  &lt;Controllers&gt;
-        ///    &lt;Controller&gt;
-        ///      &lt;Url-pattern&gt;/viewdirectory&lt;/Url-pattern&gt;
-        ///      &lt;Controller-class&gt;FileManagerApp.TreeViewController&lt;/Controller-class&gt;
-        ///    &lt;/Controller&gt;
-        ///    &lt;Controller&gt;
-        ///      &lt;Url-pattern&gt;/download&lt;/Url-pattern&gt;
-        ///      &lt;Controller-class&gt;FileManagerApp.DownloadFileController&lt;/Controller-class&gt;
-        ///    &lt;/Controller&gt;
-        ///    &lt;Controller&gt;
-        ///      &lt;Url-pattern&gt;/&lt;/Url-pattern&gt;
-        ///      &lt;Controller-class&gt;FileManagerApp.LoginController&lt;/Control [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string user_config {
-            get {
-                return ResourceManager.GetString("user_config", resourceCulture);
-            }
-        }
     }
 }

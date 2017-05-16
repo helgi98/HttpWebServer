@@ -38,19 +38,7 @@ namespace HttpWebServer
             {
                 response = ResponseDefaultBuilder.InternalServerError();
             }
-
-            // route and handle the request...
-            /*HttpResponse response = RouteRequest(inputStream, outputStream, request);
-
-            Console.WriteLine("{0} {1}", response.StatusCode, request.Url);
-            // build a default response for errors
-            if (response.Content == null)
-            {
-                if (response.StatusCode != "200")
-                {
-                    response.ContentAsUTF8 = string.Format("{0} {1} <p> {2}", response.StatusCode, request.Url, response.ReasonPhrase);
-                }
-            }*/
+            
 
             try
             {
