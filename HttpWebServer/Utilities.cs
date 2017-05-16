@@ -24,7 +24,7 @@ namespace HttpWebServer
             var loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies().ToList();
             foreach (var asm in loadedAssemblies)
             {
-                var classes = asm.GetTypes(); // you can use GetTypes to get all classes in that assembly
+                var classes = asm.GetTypes(); 
                 foreach (var c in classes)
                 {
                     if (c.FullName == className)

@@ -16,8 +16,8 @@ namespace HttpWebServer.http
         public override string ToString()
         {
             StringBuilder builder =  new StringBuilder($"{Name}={Value}; ");
-            if (Path != null) builder.Append($"Path={Path}");
-            if (MaxAge != 0) builder.Append($"Max-Age={MaxAge}");
+            if (Path != null) builder.Append($"Path={Path} ");
+            if (MaxAge != 0) builder.Append($"Max-Age={MaxAge} ");
 
             return builder.ToString();
         }

@@ -173,22 +173,11 @@ namespace HttpWebServer
                 int pos = separator + 1;
                 string value = new string(line.Substring(pos).SkipWhile(ch => char.IsWhiteSpace(ch)).ToArray());
 
-                if (name == "Cookie")
-                {
-                    String[] cookies = value.Split(';').Where(c => c != "").ToArray();
-                    foreach(var cookie in cookies)
-                    {
-                        String[] pair = cookie.Trim().Split('=');
-                        req.AddCookie(new http.Cookie { Name = pair[0], Value = pair[1] });
-                    }
-                }
+                if (name == "Cookie") ProcessCookies(req, value);
 
                 req.AddHeader(name, value);
             }
-
-            string content = null;
-
-            //Read content
+            
             if (req.GetHeader("Content-Length") != null)
             {
                 int totalBytes = Convert.ToInt32(req.GetHeader("Content-Length"));
@@ -205,13 +194,42 @@ namespace HttpWebServer
                     bytesLeft -= n;
                 }
 
-                content = Encoding.ASCII.GetString(bytes);
-            }
+                req.Content = Encoding.ASCII.GetString(bytes);
 
-            req.Content = content;
+                ProcessParameters(req);
+            }
 
 
             return req;
+        }
+        
+        private void ProcessParameters(HttpRequest req)
+        {
+            try
+            {
+                String[] parameters = req.Content.Split('&').Where(str => str != "").ToArray();
+                foreach (var parameter in parameters)
+                {
+                    String[] pair = parameter.Split('=');
+                    req.AddParameter(pair[0], pair[1]);
+                }
+            }
+            catch { }
+        }
+
+
+        private void ProcessCookies(HttpRequest req, string value)
+        {
+            try
+            {
+                String[] cookies = value.Split(';').Where(c => c != "").ToArray();
+                foreach (var cookie in cookies)
+                {
+                    String[] pair = cookie.Trim().Split('=');
+                    req.AddCookie(new http.Cookie { Name = pair[0], Value = pair[1] });
+                }
+            }
+            catch { }
         }
 
         #endregion

@@ -72,7 +72,7 @@ namespace HttpWebServer.application
             if (controller == null)
             {
                 controller = Utilities.CreateClassExample<Controller>(ctrlClass);
-                controller.Dispatcher = this;
+                controller.Container = this;
             }
             return controller;
         }

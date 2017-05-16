@@ -10,7 +10,7 @@ namespace HttpWebServer.controllers
 {
     public abstract class Controller
     {
-        public ControllerContatiner Dispatcher { get; set; }
+        public ControllerContatiner Container { get; set; }
 
         //Add response error
         public virtual void DoGet(HttpRequest req, HttpResponse res)

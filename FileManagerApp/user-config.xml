@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Config>
+  <Controllers>
+    <Controller>
+      <Url-pattern>/viewdirectory</Url-pattern>
+      <Controller-class>FileManagerApp.TreeViewController</Controller-class>
+    </Controller>
+    <Controller>
+      <Url-pattern>/download</Url-pattern>
+      <Controller-class>FileManagerApp.DownloadFileController</Controller-class>
+    </Controller>
+    <Controller>
+      <Url-pattern>/</Url-pattern>
+      <Controller-class>FileManagerApp.LoginController</Controller-class>
+    </Controller>
+  </Controllers>
+  <ResourceResolver>
+    <Resolver-class>HttpWebServer.application.ResourceResolver</Resolver-class>
+    <Path>/resources/</Path>
+  </ResourceResolver>
+</Config>

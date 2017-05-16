@@ -11,10 +11,24 @@ namespace HttpWebServer.http
     {
         private Dictionary<String, String> _queryParameters;
         private Dictionary<string, string> _headers;
+        private Dictionary<String, String> _parameters;
         private List<Cookie> _cookies;
         public string Method { get; set; }
         public Uri Url { get; set; }
         public string Content { get; set; }
+
+        public void AddParameter(String name, String value)
+        {
+            _parameters.Add(name, value);
+        }
+
+        public String GetParameter(String name)
+        {
+            String value;
+            _parameters.TryGetValue(name, out value);
+
+            return value;
+        }
 
         public void AddCookie(Cookie cookie)
         {
@@ -58,6 +72,7 @@ namespace HttpWebServer.http
             _headers = new Dictionary<string, string>();
             _queryParameters = new Dictionary<string, string>();
             _cookies = new List<Cookie>();
+            _parameters = new Dictionary<string, string>();
         }
 
         public override string ToString()
