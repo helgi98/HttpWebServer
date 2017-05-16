@@ -12,10 +12,6 @@ namespace FileManagerApp
     {
         static void Main(string[] args)
         {
-            HttpServer.GetServer().AddApplication("user");
-            HttpServer.GetServer().RunApplication("user", 8080);
-
-            Console.ReadLine();
         }
     }
 }

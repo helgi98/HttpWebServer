@@ -71,9 +71,9 @@ namespace HttpWebServer
             if (app != null) app.IsActive = false;
         }
 
-        public void AddApplication(Application app)
+        public void AddApplication(string name)
         {
-            _applications.Add(app.Name, app);
+            _applications.Add(name, new Application(name));
         }
 
         public void RemoveApplication(string name)

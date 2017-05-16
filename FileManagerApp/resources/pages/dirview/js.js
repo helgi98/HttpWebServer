@@ -5,7 +5,7 @@ function renameFile(){
 	}
 }
 
-var path = "/"
+var path = "/";
 
 function downloadFile(element)
 {

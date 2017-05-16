@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HttpWebServer.application
 {
-    abstract public class Application
+    public class Application
     {
         private ControllerContatiner _dispatcher;
 
