@@ -13,6 +13,14 @@
       <Url-pattern>/</Url-pattern>
       <Controller-class>FileManagerApp.LoginController</Controller-class>
     </Controller>
+    <Controller>
+      <Url-pattern>/rename</Url-pattern>
+      <Controller-class>FileManagerApp.RenameController</Controller-class>
+    </Controller>
+    <Controller>
+      <Url-pattern>/delete</Url-pattern>
+      <Controller-class>FileManagerApp.DeleteController</Controller-class>
+    </Controller>
   </Controllers>
   <ResourceResolver>
     <Resolver-class>HttpWebServer.application.ResourceResolver</Resolver-class>

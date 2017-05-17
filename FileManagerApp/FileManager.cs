@@ -10,11 +10,12 @@ namespace FileManagerApp
 {
     static class FileManager
     {
+        public static bool PublicAccessed { get; set; }
         public static String RootPath { get; set; }
-        public static Enum DirectoryAttributes { get; private set; }
 
         static FileManager()
         {
+            PublicAccessed = false;
             RootPath = @"D:/";
         }
 
@@ -25,13 +26,20 @@ namespace FileManagerApp
             return stream;
         }
 
-        public static Dictionary<String, List<String>> GetDirectoryContent(String path)
+
+        public static void DeleteFile(String filePath)
+        {
+            File.SetAttributes(RootPath + filePath, FileAttributes.Normal);
+            File.Delete(RootPath + filePath);
+        }
+
+        public static Dictionary<String, List<String>> GetDirectoryContent(String filePath)
         {
             Dictionary<String, List<String>> directoryContent = new Dictionary<string, List<string>>();
             directoryContent.Add("directories", new List<string>());
             directoryContent.Add("files", new List<string>());
 
-            DirectoryInfo currDirectory = new DirectoryInfo(RootPath + path);
+            DirectoryInfo currDirectory = new DirectoryInfo(RootPath + filePath);
 
             foreach (var file in currDirectory.EnumerateFiles()
                 .Where(file => !file.Attributes.HasFlag(FileAttributes.Hidden)))

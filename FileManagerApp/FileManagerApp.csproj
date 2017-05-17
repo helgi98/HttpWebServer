@@ -60,8 +60,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DeleteController.cs" />
     <Compile Include="DownloadFileController.cs" />
-    <Compile Include="FileController.cs" />
+    <Compile Include="RenameController.cs" />
     <Compile Include="FileManager.cs" />
     <Compile Include="FileManagerApp.cs" />
     <Compile Include="LoginController.cs" />
@@ -101,6 +102,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="resources\pages\dirview\FileIcon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\pages\dirview\GoBack.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="resources\pages\dirview\index.html">

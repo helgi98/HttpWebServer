@@ -200,7 +200,7 @@ namespace HttpWebServer
                 foreach (var parameter in parameters)
                 {
                     String[] pair = parameter.Split('=');
-                    req.AddParameter(pair[0], pair[1]);
+                    req.AddParameter(pair[0], WebUtility.UrlDecode(pair[1]));
                 }
             }
             catch { }

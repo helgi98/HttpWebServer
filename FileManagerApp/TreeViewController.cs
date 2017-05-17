@@ -11,11 +11,10 @@ namespace FileManagerApp
 {
     class TreeViewController: Controller
     {
-        private bool _isOpen = true;        
 
         public override void DoGet(HttpRequest req, HttpResponse res)
         {
-            if (_isOpen || req.GetCookie("admin") != null)
+            if (FileManager.PublicAccessed || req.GetCookie("admin") != null)
             {
                 String path = req.GetQueryParameter("path");
                 Dictionary<String, List<String>> data = FileManager.GetDirectoryContent(path);

@@ -24,7 +24,7 @@ namespace FileManagerApp
 
             if (login == "admin" && password == "password")
             {
-                res.Cookie = new Cookie { Name = "admin", Value = "true"};
+                res.Cookie = new Cookie { Name = "admin", Value = "true", Path = "/"};
                 Container.Forward(req, res, "pages/dirview/index.html");
             }
             else
