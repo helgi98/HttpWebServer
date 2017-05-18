@@ -14,7 +14,8 @@ namespace FileManagerApp
 
         public override void DoGet(HttpRequest req, HttpResponse res)
         {
-            if (FileManager.PublicAccessed || req.GetCookie("admin") != null)
+            if (req.GetQueryParameter("action") == "dircontent"
+                    && (FileManager.PublicAccessed || req.GetCookie("admin") != null))
             {
                 String path = req.GetQueryParameter("path");
                 Dictionary<String, List<String>> data = FileManager.GetDirectoryContent(path);
@@ -24,6 +25,7 @@ namespace FileManagerApp
                 res.Headers.Add("Content-Length", jsonData.Length.ToString());
                 res.Content = jsonData;
             }
+            else Container.Forward(req, res, "pages/dirview/index.html");
         }
     }
 }

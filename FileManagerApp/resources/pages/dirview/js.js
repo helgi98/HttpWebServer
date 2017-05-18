@@ -118,6 +118,7 @@ function showDirContent() {
             updateView(directories, files);
         }
     };
-    xhttp.open("GET", "/viewdirectory?path=" + encodeURIComponent(path), true);
+    xhttp.open("GET", "/viewdirectory?path=" + encodeURIComponent(path)
+        + "&action=" + encodeURIComponent("dircontent"), true);
     xhttp.send();
 }

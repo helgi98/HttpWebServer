@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>
+			Filesystem manager
+		</title>
+		<link rel="stylesheet" type="text/css" href="style.css">
+		<link rel="shortcut icon" href="FileIcon.ico" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script type="text/javascript" src="js.js"></script>
+	</head>
+	<body>
+		<header>
+			<h1>Admin page</h1>
+		</header>
+		<main>
+			<div id="turndiv">
+				<p><input type="image" src="unnamed.png" name="turner"/>
+				<h2 id="status">Switch on public access</h2></p>
+			</div>
+		</main>
+        <form method='get' action='/download' id='downloadForm'>
+            <input id='_downloadPath' type='hidden' value='none' name='path'>
+        </form>
+	</body>
+</html>

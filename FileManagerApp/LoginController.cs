@@ -22,10 +22,10 @@ namespace FileManagerApp
             String login = req.GetParameter("login");
             String password = req.GetParameter("password");
 
-            if (login == "admin" && password == "password")
+            if (PasswordManager.check(login, password))
             {
                 res.Cookie = new Cookie { Name = "admin", Value = "true", Path = "/"};
-                Container.Forward(req, res, "pages/dirview/index.html");
+                Container.Forward(req, res, "pages/adminview/index.html");
             }
             else
             {

@@ -138,7 +138,7 @@ namespace HttpWebServer
                 String query = new Uri(new Uri("http://loaclhost/"), tokens[1]).Query.Substring(1);
                 if (query != "")
                 {
-                    var queryData = WebUtility.UrlDecode(query).Split(';').Where(str => str != "");
+                    var queryData = WebUtility.UrlDecode(query).Split('&').Where(str => str != "");
                     foreach (var pair in queryData)
                     {
                         string[] parts = pair.Split('=');

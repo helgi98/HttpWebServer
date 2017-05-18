@@ -60,8 +60,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminController.cs" />
     <Compile Include="DeleteController.cs" />
     <Compile Include="DownloadFileController.cs" />
+    <Compile Include="PasswordManager.cs" />
     <Compile Include="RenameController.cs" />
     <Compile Include="FileManager.cs" />
     <Compile Include="FileManagerApp.cs" />
@@ -77,7 +79,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -92,6 +96,21 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="resources\pages\adminview\FileIcon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\pages\adminview\index.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\pages\adminview\style.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\pages\adminview\turn_off.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\pages\adminview\turn_on.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="resources\pages\dirview\Delete.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

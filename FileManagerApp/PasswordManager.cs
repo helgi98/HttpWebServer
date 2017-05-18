@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace Tray_Version1._0
+namespace FileManagerApp
 {
-    class PasswordManager
+    public class PasswordManager
     {
         public static bool check(string name, string password)
         {

@@ -69,7 +69,7 @@ namespace HttpWebServer.application
 
         public void Forward(HttpRequest req, HttpResponse res, String where)
         {
-            res.StatusCode = "301";
+            res.StatusCode = "307";
             _resolver.Resolve(where).Process(req, res);
         }
 

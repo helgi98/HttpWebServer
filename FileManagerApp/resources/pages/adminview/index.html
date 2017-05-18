@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>
+			Filesystem manager
+		</title>
+		<link rel="stylesheet" type="text/css" href="style.css">
+		<link rel="shortcut icon" href="FileIcon.ico" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script>
+            var status = "false";
+            $(document).ready(function () {
+                checkStatus();
+            })
+
+            function changeStatus()
+            {
+                status = (status == "true" ? "false" : "true");
+                $.post('/admin',
+                    { public_access: status });
+                showStatus();
+            }
+
+            function showStatus()
+            {
+                document.getElementById("status").innerHTML =
+                    status == "true" ? "Switch off public access" :
+                        "Switch on public access";
+                document.getElementById("image").src =
+                    status == "true" ? "turn_off.ico" : "turn_on.png";
+            }
+
+            function checkStatus()
+            {
+                var xhttp = new XMLHttpRequest();
+
+                xhttp.onreadystatechange = function () {
+                    if (this.status === 200 && this.getResponseHeader("Content-Type") == "application/json") {
+                        var data = JSON.parse(this.responseText.trim());
+                        if (data["public_access"] == "True") status = "true";
+                        else if (data["public_access"] == "False") status = "false";
+                        showStatus();
+                    }
+                };
+                xhttp.open("GET", "/admin?action=" + encodeURI("status"), true);
+                xhttp.send();
+                
+            }
+        </script>
+	</head>
+	<body>
+		<header>
+			<h1>Admin page</h1>
+		</header>
+		<main>
+			<div id="turndiv" onclick="changeStatus()">
+				<p><input id="image" type="image" name="turner"/>
+				<h2 id="status"></h2></p>
+			</div>
+		</main>
+	</body>
+</html>
