@@ -30,4 +30,10 @@
     <Resolver-class>HttpWebServer.application.ResourceResolver</Resolver-class>
     <Path>/resources/</Path>
   </ResourceResolver>
+  <Variables>
+    <Variable>
+      <Name>RootFillesPath</Name>
+      <Value>D:/</Value>
+    </Variable>
+  </Variables>
 </Config>

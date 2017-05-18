@@ -7,9 +7,9 @@ function renameFile(element) {
         var newFileName = name + "." + (extension == undefined ? "" : extension);
 
         $.post('/rename',
-            { renamePath: path, oldFileName: oldFileName, newFileName: newFileName });
-
-        element.parentElement.firstChild.innerHTML = newFileName;
+            { renamePath: path, oldFileName: oldFileName, newFileName: newFileName }, function () {
+                showDirContent();
+            });
     }
 }
 

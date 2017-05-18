@@ -16,7 +16,7 @@ namespace FileManagerApp
         static FileManager()
         {
             PublicAccessed = false;
-            RootPath = @"D:/";
+            RootPath = "C:/";
         }
 
         public static Stream DownloadFile(String path)

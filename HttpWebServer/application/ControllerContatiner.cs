@@ -16,15 +16,27 @@ namespace HttpWebServer.application
         private RouteHandler _router;
         private IResourceResolver _resolver;
         private Dictionary<String, Controller> _controllers;
+        private Dictionary<String, String> _variables;
 
         private void ConfigureDispatcher(String configPath)
         {
             try
             {
                 _controllers = new Dictionary<string, Controller>();
+                _variables = new Dictionary<string, string>();
 
                 XDocument doc = XDocument.Load(configPath);
                 XElement root = doc.Root;
+
+                //
+                var variablesElement = root.Element("Variables");
+                if (variablesElement != null)
+                {
+                    foreach (var variableElement in variablesElement.Elements("Variable"))
+                    {
+                        _variables.Add(variableElement.Element("Name").Value, variableElement.Element("Value").Value);
+                    }
+                }
 
                 //Configures route handler
                 var controllersElement = root.Element("Controllers");
@@ -67,6 +79,14 @@ namespace HttpWebServer.application
             ConfigureDispatcher(configPath);
         }
 
+        public String GetVariable(String key)
+        {
+            String value;
+            _variables.TryGetValue(key, out value);
+
+            return value;
+        }
+
         public void Forward(HttpRequest req, HttpResponse res, String where)
         {
             res.StatusCode = "307";
@@ -82,8 +102,6 @@ namespace HttpWebServer.application
             }
             else
             {
-
-
                 Controller controller = GetController(_router.RouteRequest(req.Url.ToString()));
                 
                 if (controller != null)

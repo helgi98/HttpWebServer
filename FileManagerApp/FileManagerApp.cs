@@ -9,10 +9,11 @@ namespace FileManagerApp
 {
     public class FileManagerApp : Application
     {
-        private static Application _app;
+        private static FileManagerApp _app;
 
         private FileManagerApp() : base("fm")
         {
+            FileManager.RootPath = GetVariable("RootFillesPath");
         }
 
         public static Application GetApp()

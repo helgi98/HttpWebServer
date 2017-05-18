@@ -19,6 +19,11 @@ namespace HttpWebServer.application
             _dispatcher.Process(ref req, ref res);
         }
 
+        public String GetVariable(String key)
+        {
+            return _dispatcher.GetVariable(key);
+        }
+
         public Application(string name)
         {
             IsActive = false;
